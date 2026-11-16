@@ -91,7 +91,7 @@ tasks.javadoc {
 }
 
 tasks.jar {
-    archiveBaseName.set("megalodonte-base")
+    archiveBaseName.set("megalodonte-base-desktop")
 
     manifest {
         attributes(
@@ -104,7 +104,7 @@ tasks.jar {
 }
 
 tasks.register<Jar>("javadocJar") {
-    archiveBaseName.set("megalodonte-base")
+    archiveBaseName.set("megalodonte-base-desktop")
     archiveClassifier.set("javadoc")
     from(tasks.javadoc)
 }
@@ -115,7 +115,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
             artifact(tasks.named("javadocJar"))
-            artifactId = "megalodonte-base"
+            artifactId = "megalodonte-base-desktop"
         }
     }
 }

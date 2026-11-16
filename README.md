@@ -2,7 +2,7 @@
   <img src="docs/images/megalodonte-logo.png" width="180" alt="Megalodonte logo">
 </p>
 
-# Megalodonte Base
+# Megalodonte Base Desktop
 
 A lightweight JavaFX framework for building desktop applications with a **React-inspired architecture**, featuring routing, theming, components, and async utilities.
 

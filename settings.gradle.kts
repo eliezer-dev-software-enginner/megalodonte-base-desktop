@@ -1,1 +1,1 @@
-rootProject.name = "megalodonte-base"
+rootProject.name = "megalodonte-base-desktop"

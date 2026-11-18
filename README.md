@@ -77,7 +77,7 @@ repositories {
 }
 
 dependencies {
-    implementation("megalodonte:megalodonte-base:1.0.0-beta")
+    implementation("megalodonte:megalodonte-base-desktop:1.0.0-beta")
 }
 ```
 
@@ -299,7 +299,7 @@ megalodonte.base/
 
 ## Routing
 
-`megalodonte-base` stores the routes in a `RouteTable` and owns screen lifecycle and window
+`megalodonte-base-desktop` stores the routes in a `RouteTable` and owns screen lifecycle and window
 spawning; the router (v5) only navigates. Routes are defined with `Route` and `RouteProps`:
 
 ```java
@@ -466,7 +466,7 @@ scope.cancel();
   scope is already cancelled.
 - `cancel()` / `isCancelled()` — cheap, synchronous, idempotent.
 
-Every `ScreenContextBase` (in `megalodonte-base`) owns one of these automatically, and
+Every `ScreenContextBase` (in `megalodonte-base-desktop`) owns one of these automatically, and
 `ScreenManager` cancels it right before calling `onDestroy()` — see `megalodonte-router`'s
 README for `ctx.scope()`.
 

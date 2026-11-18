@@ -81,7 +81,7 @@ dependencies {
 }
 ```
 
-The routing examples also require a compatible `megalodonte-router` dependency,
+The routing examples also require a compatible `megalodonte-router-desktop` dependency,
 which is maintained separately. Its coordinates and setup must be taken from
 that module; this repository does not declare a router version.
 
@@ -106,7 +106,7 @@ application host, screen and lifecycle contracts, theme integration and async
 utilities; combine it with [Megalodonte Components](https://github.com/eliezer-dev-software-enginner/megalodonte-components)
 for ready-to-use desktop controls and layouts.
 
-The following routing examples require the separate `megalodonte-router` module
+The following routing examples require the separate `megalodonte-router-desktop` module
 and application screen classes (`HomeScreen`, `SettingsScreen`, `ProductsScreen`,
 and `ProductDetails`). Those classes are placeholders to implement in your own
 application; the snippets do not run as a standalone project. `AppRouter.build()`
@@ -284,7 +284,7 @@ megalodonte.application/
     ├── Context           # Application context
     └── Bootstrap         # Initialization bootstrap
 
-megalodonte.router.v5/ (separate module: megalodonte-router, navigation-only)
+megalodonte.router.v5/ (separate module: megalodonte-router-desktop, navigation-only)
     └── Router            # navigateOnStage, navigateAndCloseOthers, mainStage
 
 megalodonte.base/
@@ -336,7 +336,7 @@ ctx.spawnWindow("settings");                 // open in a new window
 ctx.spawnWindow("product/123", error -> {}); // with an error handler
 ```
 
-See `megalodonte-router`'s README for the full navigation API. The screen context's
+See `megalodonte-router-desktop`'s README for the full navigation API. The screen context's
 `ctx.scope()` is cancelled when that screen is destroyed; running tasks must check
 `isCancelled()` or register cleanup with `onCancel()`.
 
@@ -467,7 +467,7 @@ scope.cancel();
 - `cancel()` / `isCancelled()` — cheap, synchronous, idempotent.
 
 Every `ScreenContextBase` (in `megalodonte-base-desktop`) owns one of these automatically, and
-`ScreenManager` cancels it right before calling `onDestroy()` — see `megalodonte-router`'s
+`ScreenManager` cancels it right before calling `onDestroy()` — see `megalodonte-router-desktop`'s
 README for `ctx.scope()`.
 
 ---

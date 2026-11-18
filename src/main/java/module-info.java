@@ -1,4 +1,4 @@
-module megalodonte.base {
+module megalodonte.base.desktop {
     requires static java.instrument;
     requires transitive megalodonte.core;
     requires java.desktop;

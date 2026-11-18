@@ -9,7 +9,7 @@ import javafx.scene.Node;
  * Subclasses override {@link #getJavaFxNode()} to return the underlying node.
  * Use {@link #CreateFromJavaFxNode} to wrap an existing node as a component.
  */
-public abstract class Component implements ComponentInterface<Component> {
+public abstract class Component implements ComponentInterface<Component>, megalodonte.contracts.ComponentContract<Component> {
     /** The underlying JavaFX node. */
     protected final Node node;
     /** Optional properties applied to this component. */
@@ -83,6 +83,12 @@ public abstract class Component implements ComponentInterface<Component> {
      */
     @SuppressWarnings("unchecked")
     public <T extends Component> Component ref(Ref<T> ref) {
+        return ref((megalodonte.contracts.RefContract<T>) ref);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends Component> Component ref(megalodonte.contracts.RefContract<T> ref) {
         ref.setCurrent((T) this);
         return this;
     }

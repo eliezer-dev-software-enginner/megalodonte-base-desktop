@@ -16,7 +16,7 @@ public final class JavaFxPlatform {
     public static BackendContract contract() {
         return new BackendContract("javafx", BackendContract.CURRENT_VERSION, EnumSet.of(
             Capability.TEXT, Capability.BUTTON, Capability.CONTAINER, Capability.REACTIVE_STATE, Capability.THEME_TOKENS,
-            Capability.SPACING, Capability.INPUT, Capability.CHECKBOX, Capability.SELECT, Capability.DATE_PICKER,
+            Capability.SPACING, Capability.INPUT, Capability.CHECKBOX, Capability.SWITCH, Capability.SELECT, Capability.DATE_PICKER,
             Capability.IMAGE, Capability.PROGRESS, Capability.ROW, Capability.COLUMN, Capability.STACK, Capability.SCROLL,
             Capability.CARD, Capability.GRID, Capability.TABLE, Capability.MENU, Capability.MODAL,
             Capability.CONDITIONAL_RENDERING, Capability.LIST_RENDERING, Capability.ROUTING, Capability.ASYNC_SCOPE,

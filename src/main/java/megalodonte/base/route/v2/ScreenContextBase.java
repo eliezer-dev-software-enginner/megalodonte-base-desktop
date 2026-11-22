@@ -175,6 +175,17 @@ public class ScreenContextBase implements ScreenContextInterface {
         return this.selfStage;
     }
 
+    @Override
+    public boolean isFullScreen() {
+        return selfStage.isFullScreen();
+    }
+
+    @Override
+    public void setFullScreen(boolean fullScreen) {
+        if (Platform.isFxApplicationThread()) selfStage.setFullScreen(fullScreen);
+        else Platform.runLater(() -> selfStage.setFullScreen(fullScreen));
+    }
+
     public RouterBase router(){
         return this.router;
     }

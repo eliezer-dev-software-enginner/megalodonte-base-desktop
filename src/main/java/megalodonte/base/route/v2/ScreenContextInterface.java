@@ -71,6 +71,22 @@ public interface ScreenContextInterface {
     Stage selfStage();
 
     /**
+     * Returns whether this screen's window is currently in full-screen mode.
+     */
+    boolean isFullScreen();
+
+    /**
+     * Changes this screen's window full-screen mode without exposing JavaFX stage
+     * manipulation to application code.
+     */
+    void setFullScreen(boolean fullScreen);
+
+    /** Toggles this screen's window between full-screen and windowed modes. */
+    default void toggleFullScreen() {
+        setFullScreen(!isFullScreen());
+    }
+
+    /**
      * Spawns a new window for the given route.
      *
      * @param path route identification to spawn

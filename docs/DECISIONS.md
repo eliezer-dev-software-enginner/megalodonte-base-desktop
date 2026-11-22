@@ -120,6 +120,19 @@ Adotar processo hospedeiro para janelas e workers Java substituíveis, com JSON 
 5. Treat resource files as binary inputs and `.env` as hash-only restart-sensitive configuration.
 6. Do not generate an application-specific WorkerMain until a generic structural activation contract is proven.
 
+## 2026-11-22 — Window mode is finalized when the stage becomes visible
+
+The entry route is mounted before `Bootstrap` shows the primary stage. JavaFX only
+forwards `Stage.setFullScreen` to the native peer on show, and `doVisibleChanged`
+applies a restored maximized state after the full-screen request. That made a
+route that declares `fullScreen=true` open maximized/windowed depending on the
+saved window state. `LiveReload.applyRouteWindowMode` now registers a one-shot
+`showingProperty` listener: when the stage is first shown it clears `maximized`
+for full-screen routes and re-applies the route's `fullScreen` value. The same
+path makes a windowed route undo a full-screen state restored by live reload.
+The mode remains route metadata — screens never touch the `Stage`, and closing
+full-screen with `Esc` stays an operator action until a route is applied again.
+
 ## 2026-11-22 — Full-screen belongs to route metadata
 
 Dedicated point-of-sale and kiosk screens need to enter true full-screen mode

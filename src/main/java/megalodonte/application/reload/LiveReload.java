@@ -1,6 +1,9 @@
 package megalodonte.application.reload;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -79,7 +82,31 @@ public final class LiveReload {
     /** Apply route-owned window mode and remember mandatory full-screen across dev restarts. */
     public static void applyRouteWindowMode(Stage stage, boolean fullScreen) {
         stage.getProperties().put(ROUTE_FULL_SCREEN, fullScreen);
+        if (fullScreen) stage.setMaximized(false);
         stage.setFullScreen(fullScreen);
+
+        // The native window does not exist yet when the entry route is mounted: JavaFX
+        // forwards the request to the peer on show, where a restored maximized/full-screen
+        // state can still win. Re-apply the route's mode once the stage is visible so it is
+        // the final word — also when a windowed route must undo a restored full-screen.
+        applyWhenShown(stage.showingProperty(), () -> {
+            if (fullScreen) stage.setMaximized(false);
+            stage.setFullScreen(fullScreen);
+        });
+    }
+
+    /** Runs {@code action} once, when a not-yet-visible window is first shown. */
+    static void applyWhenShown(ReadOnlyBooleanProperty showing, Runnable action) {
+        if (showing.get()) return;
+        ChangeListener<Boolean> listener = new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!Boolean.TRUE.equals(newValue)) return;
+                showing.removeListener(this);
+                action.run();
+            }
+        };
+        showing.addListener(listener);
     }
 
     /** Preserve foreground/background intent after JavaFX maps the recreated native window. */

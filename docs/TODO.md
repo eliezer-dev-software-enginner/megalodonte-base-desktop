@@ -19,6 +19,8 @@
 - [x] Documented client-side centralized error handling with `ErrorReporter.register(...)`, `UI.runOnUi(...)` and `ErrorReporter.handle(...)`
 - [x] Fixed unchecked cast warning in `Component.ref()`
 - [x] Added route-level full-screen metadata with backward-compatible constructors.
+- [x] Reaplica o modo da rota quando a janela aparece, cobrindo entrypoint,
+      navegação e reinícios do live reload sem conflito com estado maximizado.
 
 ## Pendências
 - [ ] Evoluir o live reload para mudanças estruturais sem reinício; preservar as mesmas janelas nativas é requisito. Protótipo com processos separados validado; faltam adaptação dos componentes existentes, estado de negócio e integração transparente, conforme [NATIVE_MESSAGING.md](NATIVE_MESSAGING.md).

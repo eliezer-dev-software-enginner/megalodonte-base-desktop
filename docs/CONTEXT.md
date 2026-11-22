@@ -5,10 +5,11 @@
 
 ## Última alteração
 - `RouteProps` now has an opt-in `fullScreen` flag for dedicated routes such as
-  POS/kiosk screens. `LiveReload.applyRouteWindowMode` re-applies the route's mode
-  as soon as the stage becomes visible, so the initial route, navigation and live
-  reload restarts all end in the declared state; a restored maximized window no
-  longer overrides full-screen, and a windowed route undoes a restored full-screen.
+  POS/kiosk screens. `LiveReload.applyRouteWindowMode` re-sends the route's mode
+  from `Platform.runLater` after the stage is mapped, forcing a real property
+  transition so the native window manager accepts it even with no saved state;
+  the initial route, navigation and live reload restarts all end in the declared
+  state.
 - Live reload desktop: `ReloadAgent` habilitado por `megalodonte dev`, atualização de bytecode e rerender das janelas de `Context`/`ScreenManager`. Instâncias/State são preservados em alterações compatíveis; raízes e bytecode anteriores são recuperados em falha. Assinaturas síncronas de render são descartadas via `SubscriptionScope` do core atualizado. Limites e comandos em [LIVE_RELOAD.md](LIVE_RELOAD.md).
 - README agora documenta o tratamento centralizado de exceções com `ErrorReporter.register(...)`, incluindo registro em log, retorno seguro à thread de UI para alertas e encaminhamento manual por `ErrorReporter.handle(...)`.
 - Added Javadoc documentation to all project classes and relevant methods

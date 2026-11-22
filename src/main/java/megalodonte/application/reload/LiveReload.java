@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutionException;
 /** Development-only screen refresh. No class-loader replacement or lifecycle restart. */
 public final class LiveReload {
     private static final String ROUTE_FULL_SCREEN = "megalodonte.route.fullScreen";
+    private static final String ROUTE_MODE_DEFERRED = "megalodonte.route.modeDeferred";
     private static final Object KEY = new Object();
     private static final Object CAPTURE = new Object();
     private static final Object WINDOW_ID = new Object();
@@ -85,14 +86,23 @@ public final class LiveReload {
         if (fullScreen) stage.setMaximized(false);
         stage.setFullScreen(fullScreen);
 
-        // The native window does not exist yet when the entry route is mounted: JavaFX
-        // forwards the request to the peer on show, where a restored maximized/full-screen
-        // state can still win. Re-apply the route's mode once the stage is visible so it is
-        // the final word — also when a windowed route must undo a restored full-screen.
-        applyWhenShown(stage.showingProperty(), () -> {
-            if (fullScreen) stage.setMaximized(false);
-            stage.setFullScreen(fullScreen);
-        });
+        // The entry route is mounted before the native window exists, and the window
+        // manager can drop a full-screen request made at map time. Re-send it after the
+        // stage is mapped. JavaFX ignores setFullScreen(true) when its property is already
+        // true, so a full-screen route needs a real false -> true transition; runLater
+        // (not the showing listener itself) lets the native peer finish mapping first.
+        // One deferred application per stage is enough, and it reads the final route mode.
+        if (Boolean.TRUE.equals(stage.getProperties().put(ROUTE_MODE_DEFERRED, true))) return;
+        applyWhenShown(stage.showingProperty(), () -> Platform.runLater(() -> {
+            boolean desired = Boolean.TRUE.equals(stage.getProperties().get(ROUTE_FULL_SCREEN));
+            if (desired) {
+                stage.setMaximized(false);
+                stage.setFullScreen(false);
+                stage.setFullScreen(true);
+            } else if (stage.isFullScreen()) {
+                stage.setFullScreen(false);
+            }
+        }));
     }
 
     /** Runs {@code action} once, when a not-yet-visible window is first shown. */

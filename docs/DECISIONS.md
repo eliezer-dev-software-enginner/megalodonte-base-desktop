@@ -120,18 +120,23 @@ Adotar processo hospedeiro para janelas e workers Java substituíveis, com JSON 
 5. Treat resource files as binary inputs and `.env` as hash-only restart-sensitive configuration.
 6. Do not generate an application-specific WorkerMain until a generic structural activation contract is proven.
 
-## 2026-11-22 — Window mode is finalized when the stage becomes visible
+## 2026-11-22 — Window mode is finalized after the stage is mapped
 
-The entry route is mounted before `Bootstrap` shows the primary stage. JavaFX only
-forwards `Stage.setFullScreen` to the native peer on show, and `doVisibleChanged`
-applies a restored maximized state after the full-screen request. That made a
-route that declares `fullScreen=true` open maximized/windowed depending on the
-saved window state. `LiveReload.applyRouteWindowMode` now registers a one-shot
-`showingProperty` listener: when the stage is first shown it clears `maximized`
-for full-screen routes and re-applies the route's `fullScreen` value. The same
-path makes a windowed route undo a full-screen state restored by live reload.
-The mode remains route metadata — screens never touch the `Stage`, and closing
-full-screen with `Esc` stays an operator action until a route is applied again.
+The entry route is mounted before `Bootstrap` shows the primary stage. A
+`Stage.setFullScreen(true)` request made at that point, or even synchronously in
+the `showingProperty` listener, can be dropped by the window manager: probing a
+window with no previously saved state produced `_NET_WM_STATE_FOCUSED` only. A
+window whose full-screen state had already been remembered by the WM appeared
+full-screen, which made the failure look like a cache problem. Two details are
+required: the request must be re-sent from `Platform.runLater` after `showing`,
+and JavaFX must see a real property change (`false -> true`), since setting a
+property to its current value does not reach the native peer.
+`LiveReload.applyRouteWindowMode` now registers one deferred application per
+stage; it reads the final route mode, clears `maximized`, toggles `fullScreen`
+off/on for full-screen routes, and clears a restored full-screen state for
+windowed routes. The mode remains route metadata — screens never touch the
+`Stage`, and closing full-screen with `Esc` stays an operator action until a
+route is applied again.
 
 ## 2026-11-22 — Full-screen belongs to route metadata
 

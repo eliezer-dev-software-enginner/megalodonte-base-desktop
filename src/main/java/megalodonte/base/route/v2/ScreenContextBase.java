@@ -91,6 +91,7 @@ public class ScreenContextBase implements ScreenContextInterface {
             Bootstrap.applyStageIcon(stage, props.iconPath());
             stage.setResizable(props.screenIsExpandable());
             stage.setScene(scene);
+            megalodonte.application.reload.LiveReload.applyRouteWindowMode(stage, props.fullScreen());
             if (megalodonte.application.reload.LiveReload.restoreBeforeShow(stage)) {
                 stage.show();
                 megalodonte.application.reload.LiveReload.restoreFocusAfterShow(stage);
@@ -162,7 +163,8 @@ public class ScreenContextBase implements ScreenContextInterface {
         }
         Bootstrap.applyStageIcon(stage, props.iconPath());
         stage.setResizable(props.screenIsExpandable());
-        stage.centerOnScreen();
+        megalodonte.application.reload.LiveReload.applyRouteWindowMode(stage, props.fullScreen());
+        if (!props.fullScreen()) stage.centerOnScreen();
     }
 
     public void setParams(Map<String, String> params) {

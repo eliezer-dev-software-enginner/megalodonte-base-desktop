@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 /** Development-only screen refresh. No class-loader replacement or lifecycle restart. */
 public final class LiveReload {
+    private static final String ROUTE_FULL_SCREEN = "megalodonte.route.fullScreen";
     private static final Object KEY = new Object();
     private static final Object CAPTURE = new Object();
     private static final Object WINDOW_ID = new Object();
@@ -69,7 +70,16 @@ public final class LiveReload {
         RestartWindowState.Snapshot snapshot = restartSnapshot();
         RestartWindowState.Window window = id == null || snapshot == null ? null : snapshot.windows().get(id);
         if (window != null) RestartWindowState.restore(stage, window);
+        if (Boolean.TRUE.equals(stage.getProperties().get(ROUTE_FULL_SCREEN))) {
+            stage.setFullScreen(true);
+        }
         return window == null || window.showing();
+    }
+
+    /** Apply route-owned window mode and remember mandatory full-screen across dev restarts. */
+    public static void applyRouteWindowMode(Stage stage, boolean fullScreen) {
+        stage.getProperties().put(ROUTE_FULL_SCREEN, fullScreen);
+        stage.setFullScreen(fullScreen);
     }
 
     /** Preserve foreground/background intent after JavaFX maps the recreated native window. */

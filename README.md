@@ -324,6 +324,15 @@ RouteTable table = new RouteTable(routes, "home");
 Router router = new Router(table);
 ```
 
+The four-argument `RouteProps` constructor creates a regular window. Dedicated
+kiosk, media or point-of-sale routes can request true full-screen mode with the
+boolean overload below. Navigation to another route restores windowed mode when
+that route does not request full screen.
+
+```java
+new RouteProps(1200, 620, "Point of sale", true, true)
+```
+
 Route parameters are supported via `${param}` syntax.
 
 Screens receive a `ScreenContextInterface ctx` (from `megalodonte.base.route.v2`) in their

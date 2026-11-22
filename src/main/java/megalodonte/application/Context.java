@@ -149,7 +149,8 @@ public final class Context {
         stage.setScene(scene);
         stage.setTitle(routeResult.props().name());
         Bootstrap.applyStageIcon(stage, props.iconPath());
-        stage.centerOnScreen();
+        megalodonte.application.reload.LiveReload.applyRouteWindowMode(stage, props.fullScreen());
+        if (!props.fullScreen()) stage.centerOnScreen();
         // onMount was already called inside Router.resolveWithStage()
     }
 

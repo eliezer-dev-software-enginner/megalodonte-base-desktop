@@ -119,3 +119,12 @@ Adotar processo hospedeiro para janelas e workers Java substituíveis, com JSON 
 4. Use token/symbol metadata for detection and dependency insight, while respecting javac/class-file granularity.
 5. Treat resource files as binary inputs and `.env` as hash-only restart-sensitive configuration.
 6. Do not generate an application-specific WorkerMain until a generic structural activation contract is proven.
+
+## 2026-11-22 — Full-screen belongs to route metadata
+
+Dedicated point-of-sale and kiosk screens need to enter true full-screen mode
+without application code reaching into the JavaFX `Stage`. `RouteProps` therefore
+owns an opt-in `fullScreen` flag. `Context` applies it on the entry route and
+`ScreenContextBase` reapplies it during navigation; regular routes explicitly
+restore windowed mode. Existing four/five-argument constructors remain windowed
+for source compatibility.

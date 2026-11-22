@@ -4,6 +4,9 @@
 - JavaFX + Megalodonte (UI framework)
 
 ## Última alteração
+- `RouteProps` now has an opt-in `fullScreen` flag for dedicated routes such as
+  POS/kiosk screens. Initial rendering and later navigation both apply it, and
+  navigating to a regular route leaves full-screen mode.
 - Live reload desktop: `ReloadAgent` habilitado por `megalodonte dev`, atualização de bytecode e rerender das janelas de `Context`/`ScreenManager`. Instâncias/State são preservados em alterações compatíveis; raízes e bytecode anteriores são recuperados em falha. Assinaturas síncronas de render são descartadas via `SubscriptionScope` do core atualizado. Limites e comandos em [LIVE_RELOAD.md](LIVE_RELOAD.md).
 - README agora documenta o tratamento centralizado de exceções com `ErrorReporter.register(...)`, incluindo registro em log, retorno seguro à thread de UI para alertas e encaminhamento manual por `ErrorReporter.handle(...)`.
 - Added Javadoc documentation to all project classes and relevant methods

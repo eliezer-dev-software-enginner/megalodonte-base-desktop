@@ -103,7 +103,7 @@ configured repository; its native starter uses base, components and theme.
 See the [ecosystem guide](https://github.com/eliezer-dev-software-enginner/megalodonte-ecossystem#readme)
 for a first-project walkthrough and local dependency setup. Base supplies the
 application host, screen and lifecycle contracts, theme integration and async
-utilities; combine it with [Megalodonte Components](https://github.com/eliezer-dev-software-enginner/megalodonte-components)
+utilities; combine it with [Megalodonte Components](https://github.com/eliezer-dev-software-enginner/megalodonte-components-desktop)
 for ready-to-use desktop controls and layouts.
 
 The following routing examples require the separate `megalodonte-router-desktop` module

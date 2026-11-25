@@ -10,7 +10,7 @@ megalodonte dev --project . --offline
 
 Requires JDK 25, a graphical session, the Gradle `application` plugin, and matching
 updated `megalodonte-core` and `megalodonte-base-desktop` artifacts. Applications using
-`megalodonte-reactivity` also need its updated artifact for subscription cleanup.
+`megalodonte-reactivity-desktop` also need its updated artifact for subscription cleanup.
 Publish libraries to Maven Local in that order. Existing applications do not need
 changes to `main` or their render methods when they use `Context.useView` or
 `ScreenManager` routes. Install/update the CLI separately as described in its README.
